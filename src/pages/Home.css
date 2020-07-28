@@ -1,0 +1,30 @@
+.headerMenu {
+    text-align: center;
+}
+
+.headerButton {
+    padding-right: 50px;
+    width: 200px;
+}
+
+.searchTable {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.searchBar {
+    margin: 10px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.searchButton {
+    vertical-align: bottom;
+}
+
+input {
+    color: black;
+}
