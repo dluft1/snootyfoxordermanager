@@ -28,3 +28,9 @@ table {
 input {
     color: black;
 }
+
+table {
+    border-collapse: collapse;
+
+
+}

@@ -60,37 +60,11 @@ class NewOrders extends React.Component {
   componentDidMount() {
     console.log("Menu Orders Mounted");
     let currentComponent = this;
-    var finalArray = new Array();
     $.post('http://localhost:8080/snootyordermanager/index.php', { action: "update", component: "new" }, function (response) {
       var temp = JSON.parse(response);
       currentComponent.setState({ newOrders: temp })
-      console.log("Returned data from PHP: " + response);
+      console.log(temp);
 
-      var counter = 0;
-      var i;
-      for ( i = 0; i < temp.length; i++) {
-        console.log(temp[0]);
-         var tempFinal = new Array();
-         tempFinal.push(temp[counter]);
-
-        if (temp[i] == tempFinal[0].ordernumber) {
-          tempFinal.push(temp[i]);
-        }
-        else {
-          console.log(tempFinal);
-          finalArray.push(tempFinal);
-          counter = i;
-          tempFinal = [];
-          tempFinal.push(temp[i]);
-          if (i === temp.length)
-          {
-            finalArray.push(tempFinal);
-          }
-
-        }
-      }
-
-      console.log(finalArray);
     })
 
 
@@ -154,26 +128,44 @@ class ReturnedTables extends React.Component {
     this.setState({ orderData: this.props.orderData })
   }
 
-  ordersTableData({ ordernumber, menuitem }) {
-    console.log(this.props.orderData[0].ordernumber);
+  ordersTableData({ ordernumber }) {
+    console.log(this.props.orderData);
+    console.log(ordernumber);
     return (
-      <tr key={ordernumber}>
-        <td>{menuitem}</td>
+      <tr>
+        <td>{}</td>
       </tr>
     )
   }
   render() {
-    let currentComponent = this;
+    console.log(this.props.orderData);
     return (
       <div>
         <table>
           <tbody>
-            {currentComponent.props.orderData.map(currentComponent.ordersTableData.bind(currentComponent))}
+            {this.props.orderData.map((item, index) => (
+              <div>
+                <tr key={index}>
+                  <td style={{padding: 20 +"px"}}>Order Number: {item.ordernumber}</td>
+                  <td style={{padding: 20 +"px"}}>Table: {item.tablenumber}</td>
+                  <td style={{padding: 20 +"px"}}>Order Date: {item.orderdate}</td>
+                </tr>
+                {item.values.map((c, i) => (
+                  <tr key={i}>
+                    <td style={{paddingLeft: 20 + "px"}, {paddingBottom : 10 +"px"}}>{c.menuitem}</td>
+                    </tr>
+                )
+                )}
+
+              </div>
+            ))}
+
           </tbody>
         </table>
       </div>
     )
   }
+  // {currentComponent.props.orderData.map(currentComponent.ordersTableData.bind(currentComponent))}
 }
 
 
